@@ -1,0 +1,12 @@
+.slider-arrow{
+    background-color: #420175;
+    opacity: 0.6;
+}
+
+.slider-arrow:hover{
+    opacity: 1;
+}
+
+.veiw-more:hover{
+    background-color: #420175;
+}
