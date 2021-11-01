@@ -1,9 +1,10 @@
-
 <div class="login-box">
+
+    @if($showMemberForm)
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1"><b>USER</b>LINK</a>
+            <a href="#" class="h1">MEMBERS</a>
         </div>
 
         @if($showGenerateLink)
@@ -71,39 +72,10 @@
                         </div>
                     </div>
                 </div>
+
                 @error('church') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
 
-
-                <div class="input-group mb-3">
-                    <select wire:model.lazy="media" class="form-control {{$errors->has('media')? 'is-invalid' : '' }}">
-                        <option value="">Select media</option>
-                        @if($medias)
-                            @foreach($medias as $file)
-                                <option value="{{$file->id}}">{{$file->name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-file"></span>
-                        </div>
-                    </div>
-                </div>
-                @error('media') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-
-
-
-
                 <div class="row">
-{{--                    <div class="col-8">--}}
-{{--                        <div class="icheck-primary">--}}
-{{--                            <input type="checkbox" id="remember">--}}
-{{--                            <label for="remember">--}}
-{{--                                Remember Me--}}
-{{--                            </label>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
                     <!-- /.col -->
                     <div class="col-12">
                         <button wire:loading.remove wire:target="generateLink" type="submit" class="btn btn-primary btn-block"> Generate Link</button>
@@ -111,12 +83,13 @@
                     </div>
                     <!-- /.col -->
                 </div>
+
+                <div class="input-group">
+                    <a href="#" wire:click.prevent="displayNonMemberForm" style="margin-right: 35%; margin-top: 10px;">Not a Member?</a>
+                </div>
+
             </form>
 
-            <!-- /.social-auth-links -->
-{{--            <p class="mb-1">--}}
-{{--                <a href="{{route('reset')}}">I forgot my password</a>--}}
-{{--            </p>--}}
         </div>
         @endif
 
@@ -131,6 +104,11 @@
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
+    @endif
+
+    @if($showNonMemberForm)
+        @livewire('non-member-generate-referral-link')
+    @endif
 
 
 </div>

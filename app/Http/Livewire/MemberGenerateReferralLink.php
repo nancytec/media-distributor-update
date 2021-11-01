@@ -20,8 +20,9 @@ class MemberGenerateReferralLink extends Component
     public $email;
     public $password;
     public $confirm_password;
-    public $media;
+    public $media = 1;
     public $church;
+
 
     // Pre-fetched Data
     public $churches;
@@ -31,16 +32,32 @@ class MemberGenerateReferralLink extends Component
     public $referal_link;
     public $showReferalLink;
     public $showGenerateLink;
+    public $showMemberForm;
+    public $showNonMemberForm;
 
     public $churchData;
+
+    protected $listeners = ['displayMemberForm' => 'displayMemberForm'];
 
     public function mount()
     {
         $this->fetchChurches();
         $this->fetchMedia();
         $this->showGenerateLinkForm();
+        $this->displayMemberForm();
     }
 
+    public function displayMemberForm()
+    {
+        $this->showNonMemberForm = false;
+        $this->showMemberForm = true;
+    }
+
+    public function displayNonMemberForm()
+    {
+        $this->showMemberForm = false;
+        $this->showNonMemberForm = true;
+    }
 
     public function showGenerateLinkForm(){
         $this->showGenerateLink = true;
@@ -187,11 +204,11 @@ class MemberGenerateReferralLink extends Component
 
       //Create Views with the inserted Data
       MediaLinkDownload::create([
-            'media_link' => env('REF_URL')."/media/$this->media"."/".$this->church."/".Str::slug($this->name),
+            'media_link' => "/media/$this->media"."/".$this->church."/".Str::slug($this->name),
             'count'         => 0
       ]);
       MediaLinkShare::create([
-            'media_link' => env('REF_URL')."/media/$this->media"."/".$this->church."/".Str::slug($this->name),
+            'media_link' => "/media/$this->media"."/".$this->church."/".Str::slug($this->name),
             'count'         => 0
       ]);
 

@@ -47,6 +47,12 @@ return [
             'provider' => 'members',
         ],
 
+        'admin' => [
+            'redirectTo' => 'admin.dashboard',
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -80,6 +86,11 @@ return [
         'members' => [
             'driver' => 'eloquent',
             'model' => App\Models\Member::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [

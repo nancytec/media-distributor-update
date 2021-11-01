@@ -11,7 +11,7 @@
                     </li>
                 @else
                     <li class="page-item" wire:click="previousPage">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        <a class="page-link" style="cursor: pointer;"  tabindex="-1">Previous</a>
                     </li>
 
                 @endif

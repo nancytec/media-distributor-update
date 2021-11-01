@@ -28,6 +28,9 @@ class RedirectIfAuthenticated
             if (Auth::guard('member')->check()) {
                 return redirect('/church/dashboard');
             }
+            if (Auth::guard('admin')->check()) {
+                return redirect('/admin/dashboard');
+            }
         }
 
         return $next($request);

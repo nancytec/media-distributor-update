@@ -28,6 +28,17 @@ class ChurchRouteController extends Controller
         return view('church.church_members_list');
     }
 
+    public function churchAllMediaPage()
+    {
+        return view('church.church_all_media');
+    }
+
+    public function churchViewMediaPage($media_id)
+    {
+        return view('church.church_view_media', ['media_id' => $media_id]);
+    }
+
+
     public function churchMembersViewPage($member_id)
     {
         return view('church.church_members_view', ['member_id' => $member_id]);
