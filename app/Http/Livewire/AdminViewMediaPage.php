@@ -25,7 +25,22 @@ class AdminViewMediaPage extends Component
 
     public $distLinks;
 
+
+    public $search;
+//    public $churches;
+
     protected $listeners = ['delete'];
+
+    public function updated($field){
+        if (empty($this->search)){
+            $this->fetchChurches();
+        }
+
+        if ($this->search){
+            $this->churches = User::where('name', 'LIKE', "%{$this->search}%")->get();
+        }
+
+    }
 
     public function mount($media_id){
         $this->media = Media::find($media_id);
@@ -33,16 +48,17 @@ class AdminViewMediaPage extends Component
 
     public function showDistLinks(){
         $this->fetchChurches();
-
         $this->distLinks = true;
         return $this->emit('alert', ['type' => 'success', 'message' => 'Distributors Link Generated']);
     }
 
+
+
     public function hideDistLinks(){
 //        $user = User::find(Auth::user()->id);
-        if (!ChurchFileLink::where('church_id', Auth::user()->id)->first()){
-            $this->createRefLink(Auth::user());
-        }
+//        if (!ChurchFileLink::where('church_id', Auth::user()->id)->first()){
+//            $this->createRefLink(Auth::user());
+//        }
         $this->distLinks = false;
         return $this->emit('alert', ['type' => 'success', 'message' => 'Distributors Link Hidden.']);
     }

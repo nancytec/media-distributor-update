@@ -1,12 +1,10 @@
 <div class="login-box">
 
-    @if($showMemberForm)
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1">MEMBERS</a>
+            <a href="#" class="h1">MEDIA LINK</a>
         </div>
-
         @if($showGenerateLink)
         <div class="card-body">
             <p class="login-box-msg">Sign in to generate your link</p>
@@ -54,38 +52,87 @@
                 @error('confirm_password') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
 
 
+
                 <div class="input-group mb-3">
-                  <select wire:model.lazy="church" class="form-control {{$errors->has('church')? 'is-invalid' : '' }}">
+                    <select wire:model.lazy="status" class="form-control {{$errors->has('status')? 'is-invalid' : '' }}">
 
+                        <option value="">Select Membership Status</option>
+                        <option value="member">LoveWorld Nation</option>
+                        <option value="non_member">Minister/Ministries/Missionaries</option>
 
-                      <option value="">Select your church</option>
-                        @if($churches)
-                            @foreach($churches as $user)
-                              <option value="{{$user->slug}}">{{$user->name}}</option>
-                          @endforeach
-                       @endif
-
-                  </select>
-                     <div class="input-group-append">
+                    </select>
+                    <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-user-plus"></span>
+                            <span class="fas fa-users"></span>
                         </div>
                     </div>
                 </div>
 
-                @error('church') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                @error('status') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+
+
+                @if($showMemberForm)
+                    <div class="input-group mb-3">
+                        <select wire:model.lazy="church" class="form-control {{$errors->has('church')? 'is-invalid' : '' }}">
+
+
+                            <option value="">Select your church</option>
+                            @if($churches)
+                                @foreach($churches as $user)
+                                    <option value="{{$user->slug}}">{{$user->name}}</option>
+                                @endforeach
+                            @endif
+
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-plus"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @error('church') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                @endif
+
+
+                @if($showNonMemberForm)
+                    <div class="input-group mb-3">
+                        <input type="text" required wire:model.lazy="church_name" class="form-control {{$errors->has('church_name')? 'is-invalid' : '' }}" placeholder="Church Name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @error('church_name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+
+                    <div class="input-group mb-3">
+                        <input type="text" required wire:model.lazy="church_address" class="form-control {{$errors->has('church_address')? 'is-invalid' : '' }}" placeholder="Church Address">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @error('church_address') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+
+                @endif
 
                 <div class="row">
                     <!-- /.col -->
-                    <div class="col-12">
-                        <button wire:loading.remove wire:target="generateLink" type="submit" class="btn btn-primary btn-block"> Generate Link</button>
+                    <div class="col-12" wire:loading.remove wire:target="status">
+                        <button wire:loading.remove wire:target="generateLink"  type="submit" class="btn btn-primary btn-block"> Generate Link</button>
                         <button disabled wire:loading wire:target="generateLink" type="submit" class="btn btn-primary btn-block">  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                    </div>
+
+                    <div class="col-12" wire:loading wire:target="status">
+                        <button type="submit" class="btn btn-primary btn-block">  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                     </div>
                     <!-- /.col -->
                 </div>
 
-                <div class="input-group">
-                    <a href="#" wire:click.prevent="displayNonMemberForm" style="margin-right: 35%; margin-top: 10px;">Not a Member?</a>
+                <div class="input-group" style="margin-top: 10px; text-align: center;">
+                    <small>Please select the appropriate membership status</small>
                 </div>
 
             </form>
@@ -104,11 +151,5 @@
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    @endif
-
-    @if($showNonMemberForm)
-        @livewire('non-member-generate-referral-link')
-    @endif
-
 
 </div>

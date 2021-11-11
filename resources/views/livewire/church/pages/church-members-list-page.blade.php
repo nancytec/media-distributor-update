@@ -28,17 +28,19 @@
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </div>
                         <div class="card-header" wire:loading.remove wire:target="delete">
-                            <h3 class="card-title">All Members</h3> &nbsp;
+                            <h3 wire:loading.remove wire:target="search" class="card-title">  @if($searchResult)  {{count($searchResult)}}  @else {{count($members)}} @endif Members</h3>
+                            <h3 wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h3>&nbsp;
                         </div>
                         <!-- ./card-header -->
                         <div class="card-body">
+                            <input type="search" wire:model="search" class="form-control" placeholder="Search memeber" style="margin-bottom: 10px;"/>
                             <table class="table table-bordered table-hover" >
                                 <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>email</th>
-                                    <th>Date Created</th>
-                                    <th>MediaNo</th>
+                                    <th>Date Joined</th>
+                                    <th>Links Shared</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -51,7 +53,8 @@
                                             <td>{{count($member->media)}}</td>
                                             <td>
                                                 <p>
-                                                    <a class="btn btn-primary" href="{{route('church.members-view', $member->id)}}" >View</a>
+                                                    <a class="btn btn-primary" href="{{route('church.members-view', $member->id)}}" >View</a> &nbsp;
+                                                    <a class="btn btn-danger" wire:click="deleteConfirm" href="#" >Remove</a>
                                                 </p>
                                             </td>
                                         </tr>
@@ -61,7 +64,9 @@
 
                                 </tbody>
                             </table>
+                            @if(!$searchResult)
                             {{ $members->links('components.pagination-links') /* For pagination links */}}
+                            @endif
                         </div>
                         <!-- /.card-body -->
                     </div>

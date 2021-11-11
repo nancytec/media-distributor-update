@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>Now That You Are Born Again</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -349,6 +349,7 @@
                     <tr>
                       <td>
                         <p>Hi {{ $name }},</p>
+                          <p>{{ \Illuminate\Support\Facades\Session::get('sender_name') }} Shared A Book With You Titled "NOW THAT YOU ARE BORN AGAIN"</p>
                         <p>Here's your download link.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>

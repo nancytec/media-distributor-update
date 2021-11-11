@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\BookBeneficiary;
 use App\Models\MediaLinkDownload;
 use App\Models\MediaLinkLike;
 use App\Models\MediaLinkShare;
@@ -430,6 +431,67 @@ class MediaController extends BaseController
 //        }
 
         return $this->sendResponse($request->all(), 'It got here');
+    }
+
+    /**
+     * Sends a download link to user.
+     *
+     * @param \Illuminate\Http\Request  $request  The request
+     */
+    public function giftLink(Request $request)
+    {
+
+        $user = $request->user();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required | email',
+            'media_name' => 'required | string',
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+//
+        $data = [
+//            'path' => $request->path,
+            'path' => 'media/download/1',
+            'name' => $request->name,
+            'sender_name' => $request->sernder_name,
+            'media_name' => $request->media_name
+        ];
+
+        Session::put(['sender_name' => $request->sender_name]);
+
+        Mail::send('mail', $data, function($message) use($request, $data) {
+            $message->to($request->email, $data['name'])->subject('Media download link');
+            $message->from('no-reply@loveworldbooks.com','Loveworld Publishing');
+        });
+
+        $this->saveBeneficiary($request);
+        return $this->sendResponse($request->all(), 'It got here');
+    }
+
+    /**
+     * Adds a guest user to DB.
+     *
+     * @param      \Illuminate\Http\Request  $request  The request
+     */
+    public function saveBeneficiary(Request $request)
+    {
+        if (!BookBeneficiary::firstWhere('email', $request->email)) {
+            try {
+                $guest =  BookBeneficiary::create([
+                    'sender_name' => $request->sender_name,
+                    'sender_email' => $request->sender_email,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'country' => $request->country,
+                ]);
+                return true;
+            }catch (\Exception $e){
+                return false;
+            }
+
+        }
     }
 
     public function updateDownloads(Request $request){

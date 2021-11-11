@@ -59,7 +59,10 @@
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
-                                <li style="margin-right: 20px;" wire:click="showSharedLinks" class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab"><span wire:loading.remove wire:target="showSharedLinks">Shared Media Links</span> <span wire:loading wire:target="showSharedLinks" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> </a></li>
+                                <li style="margin-right: 20px;" wire:click="showSharedLinks" class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">
+                                        <span wire:loading.remove wire:target="showSharedLinks">Shared Media Links</span>
+                                        <span wire:loading wire:target="showSharedLinks" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </a></li>
                                 <li wire:click="showMembers" class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab"><span wire:loading.remove wire:target="showMembers">Registered Members</span> <span wire:loading wire:target="showMembers" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> </a></li>
                             </ul>
                         </div><!-- /.card-header -->
@@ -157,7 +160,7 @@
                                                                 {{$loop->index + 1}}. {{$member->name}}
                                                                 <span class="float-right">
                                                                 <a href="{{route('admin.member-view', $member->id)}}" class="link-black text-sm mr-2"><i class="fas fa-user mr-1"></i> Profile</a>
-                                                                <a href="#" class="link-black text-sm mr-2"><i class="fas fa-trash mr-1"></i> Remove</a>
+                                                                <a wire:click="deleteMemberConfirm({{$member->id}})" href="#" class="link-black text-sm mr-2"><i class="fas fa-trash mr-1"></i> Remove</a>
                                                                  </span>
                                                                  <hr>
                                                                 @endforeach

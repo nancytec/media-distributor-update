@@ -23,25 +23,26 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="card-title">All Registered Churches</h4>
+                            <h4 wire:loading.remove wire:target="search" class="card-title">  @if($searchResult)  {{count($searchResult)}}  @else {{count($churches)}} @endif Churches</h4>
+                            <h4 wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
                             <span class="float-right">
                                <button  type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-success" >Add Church</button>
                             </span>
                         </div>
+                        <input type="search" wire:model="search" class="form-control" placeholder="Search church"/>
 
                         <div class="card-body">
                             <div>
                                 <div class="mb-2">
-                                    <a class="btn btn-secondary" href="javascript:void(0)" data-shuffle> Shuffle churches</a>
                                     <div class="float-right">
-                                        <select class="custom-select" style="width: auto;" data-sortOrder>
-                                            <option value="index"> Sort by Position </option>
-                                            <option value="sortData"> Sort by Custom Data </option>
-                                        </select>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" href="javascript:void(0)" data-sortAsc> Ascending </a>
-                                            <a class="btn btn-default" href="javascript:void(0)" data-sortDesc> Descending </a>
-                                        </div>
+{{--                                        <select class="custom-select" style="width: auto;" data-sortOrder>--}}
+{{--                                            <option value="index"> Sort by Position </option>--}}
+{{--                                            <option value="sortData"> Sort by Name </option>--}}
+{{--                                        </select>--}}
+{{--                                        <div class="btn-group">--}}
+{{--                                            <a class="btn btn-default" href="javascript:void(0)" data-sortAsc> Ascending </a>--}}
+{{--                                            <a class="btn btn-default" href="javascript:void(0)" data-sortDesc> Descending </a>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +50,7 @@
                                 <div class="filter-container p-0 row">
                                     @if($churches)
                                         @foreach($churches as $church)
-                                            <div class="filtr-item col-sm-3" data-category="{{$church->name}}" data-sort="{{$church->name}} sample" style="text-align: center; margin-bottom: 40px;">
+                                            <div class="filter-item col-sm-3" data-category="{{$church->name}}" data-sort="{{$church->name}} sample" style="text-align: center; margin-bottom: 40px;">
                                                 <a href="{{route('admin.church-view', $church->id)}}" data-title="sample 1 - white">
                                                     <img src="{{$church->ImagePath}}" class="img-fluid mb-2" alt="white sample" style="width: 60%; border-radius: 50%; border: 2px solid #0c84ff;"/>
                                                 </a><br>
@@ -60,7 +61,9 @@
                                         @endforeach
                                     @endif
                                 </div>
+                                @if(!$searchResult)
                                 {{ $churches->links('components.pagination-links') /* For pagination links */}}
+                                @endif
                             </div>
 
                         </div>

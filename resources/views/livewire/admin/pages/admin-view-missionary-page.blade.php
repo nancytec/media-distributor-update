@@ -58,24 +58,22 @@
                         </div><!-- /.card-header -->
 
                         <div class="card-body">
-                                <div class="tab-content">
-                                    <!-- /.tab-pane -->
-                                    <div class="tab-pane active" id="timeline">
-                                        <!-- The timeline -->
-                                        <p >Phone: <span style="color: #0c84ff;">{{$guest->phone}}</span></p>
-                                        <p>Country: <span style="color: #0c84ff;">{{$guest->country}}</span></p>
-                                        <p>Purpose for getting the book: <span style="color: #0c84ff;">{{$guest->purpose}}</span></p>
-
-                                        <button wire:click="deleteConfirm({{$guest->id}})" class="btn btn-danger">
-                                            <span wire:loading.remove>Remove</span>
-                                            <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                        </button>
-                                    </div>
-                                    <!-- /.tab-pane -->
-                                    <!-- /.tab-pane -->
+                            <div class="tab-content">
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane active" id="timeline">
+                                    <!-- The timeline -->
+                                    <p >Church: <span style="color: #0c84ff;">{{$guest->church_name}}</span></p>
+                                    <p>Location: <span style="color: #0c84ff;">{{$guest->church_address}}</span></p>
+                                    <button wire:click="deleteConfirm({{$guest->id}})" class="btn btn-danger">
+                                        <span wire:loading.remove>Remove</span>
+                                        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </button>
                                 </div>
-                                <!-- /.tab-content -->
-                            </div><!-- /.card-body -->
+                                <!-- /.tab-pane -->
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
 
 
                     </div>

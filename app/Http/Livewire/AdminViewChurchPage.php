@@ -8,6 +8,11 @@ use App\Models\ChurchMediaLinkLike;
 use App\Models\ChurchMediaLinkShare;
 use App\Models\ChurchMediaLinkView;
 use App\Models\ChurchMemberFileLink;
+use App\Models\MediaLinkDownload;
+use App\Models\MediaLinkLike;
+use App\Models\MediaLinkShare;
+use App\Models\MediaLinkView;
+use App\Models\Member;
 use App\Models\User;
 use Livewire\Component;
 
@@ -17,6 +22,9 @@ class AdminViewChurchPage extends Component
 
     public $membersDisplay;
     public $sharedLinksDisplay;
+
+    protected $listeners = ['delete' => 'delete', 'deleteMember' => 'deleteMember'];
+
 
     public function showMembers(){
         $this->sharedLinksDisplay = false;
@@ -34,7 +42,6 @@ class AdminViewChurchPage extends Component
         $this->church = User::findOrFail($church_id);
         $this->showSharedLinks();
     }
-
 
     public function fetchMember($church_email)
     {
@@ -62,6 +69,7 @@ class AdminViewChurchPage extends Component
         }
     }
 
+
     public function alert($type, $title, $text="Press Ok to Continue"){
         $this->dispatchBrowserEvent('swal:modal', [
             'type' => $type,
@@ -71,7 +79,7 @@ class AdminViewChurchPage extends Component
     }
 
     public function confirmRequest($type, $title, $text="Press Ok to Continue", $id=''){
-        $this->dispatchBrowserEvent('swal:confirm', [
+        $this->dispatchBrowserEvent('swal:confirmMember', [
             'type' => $type,
             'title' => $title,
             'text' => $text,
@@ -80,20 +88,36 @@ class AdminViewChurchPage extends Component
     }
 
 
-    //Delete Member
-    // Remove links, Remove the church data
-    public function deleteConfirmMember($member_slug)
-    {
-        $links = ChurchMemberFileLink::where([
-            ['slug', '=', $member_slug],
-            ['church_slug', '=', $this->church->slug]
-        ])->get();
 
-        dd($links);
+    public function deleteMemberConfirm($id){
+        //Notify User before delete i.e fire the event listener
+        $this->confirmRequest('warning', 'Are you sure!', 'Press cancel to abort request', $id);
+    }
 
-        foreach ($links as $link){
+    public function deleteMember($id){
+        //Fetch User
+        $member = Member::find($id);
+        $media_links = ChurchMemberFileLink::where('slug', $member->slug)->get();
 
+        foreach ($media_links as $media_link){
+            try {
+                MediaLinkView::where('media_link', $media_link->link)->delete();
+                MediaLinkLike::where('media_link', $media_link->link)->delete();
+                MediaLinkShare::where('media_link', $media_link->link)->delete();
+                MediaLinkDownload::where('media_link', $media_link->link)->delete();
+                ChurchMemberFileLink::where('link', $media_link->link)->delete();
+
+            }catch (\Exception $err){
+                $this->alert('error', 'Something went wrong', $err);
+            }
         }
+        //Delete the member
+        $member->delete();
+        //Notify Deleted
+        $this->alert('success', 'Media Link Deleted', 'Press Ok to continue');
+
+        $this->fetchMember($this->church->email);
+
     }
 
     public function render()

@@ -16,15 +16,25 @@ class AdminChurchPage extends Component
     public $password;
     public $c_password;
 
+    public $search;
+    public $searchResult;
+
 
     public function updated($field)
     {
-        $this->validateOnly($field, [
-            'name'       => 'required|max:255',
-            'email'      => 'required|email|max:255|unique:users,email',
-            'password'   => 'required|min:6|max:255',
-            'c_password' => 'min:6|required_with:password|same:password',
-        ]);
+        if(!$this->search){
+            $this->validateOnly($field, [
+                'name'       => 'required|max:255',
+                'email'      => 'required|email|max:255|unique:users,email',
+                'password'   => 'required|min:6|max:255',
+                'c_password' => 'min:6|required_with:password|same:password',
+            ]);
+        }
+
+        if ($this->search){
+            $this->searchResult = User::where('name', 'LIKE', "%{$this->search}%")->get();
+        }
+
     }
 
     public function save()
@@ -66,8 +76,16 @@ class AdminChurchPage extends Component
 
     public function render()
     {
-        return view('livewire.admin.pages.admin-church-page', [
-            'churches' => User::orderBy('id', 'DESC')->paginate(2000)
-        ]);
+        if ($this->searchResult && !empty($this->search)){
+            return view('livewire.admin.pages.admin-church-page', [
+                'churches' => $this->searchResult
+            ]);
+        }else {
+            $this->searchResult = false;
+            return view('livewire.admin.pages.admin-church-page', [
+                'churches' => User::orderBy('id', 'DESC')->paginate(2000)
+            ]);
+        }
+
     }
 }

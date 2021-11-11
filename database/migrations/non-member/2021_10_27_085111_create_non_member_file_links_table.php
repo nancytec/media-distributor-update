@@ -21,6 +21,8 @@ class CreateNonMemberFileLinksTable extends Migration
             $table->string('unique_id');
             $table->string('password');
             $table->string('link')->nullable();
+            $table->text('church_name');
+            $table->text('church_address');
             $table->integer('media_id');
             $table->timestamps();
         });

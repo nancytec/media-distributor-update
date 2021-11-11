@@ -72,9 +72,10 @@
                             <!-- Date -->
                             @if($distLinks)
                             <div class="form-group">
-                                <label>Search:</label>
+                                <label wire:loading.remove wire:target="search" class="card-title"> {{count($churches)}} Distributors</label>
+                                <label wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></label>
                                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                    <input type="search" class="form-control " placeholder="Enter the church name"/>
+                                    <input type="search" wire:model="search" class="form-control " placeholder="Enter the church name"/>
                                     <div class="input-group-append">
                                         <div class="input-group-text"><i class="fa fa-search"></i></div>
                                     </div>

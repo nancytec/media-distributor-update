@@ -20,6 +20,8 @@ class CreateNonMembersTable extends Migration
             $table->string('unique_id'); //30 charUniquelink_timiestamp
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->text('church_name')->nullable();
+            $table->text('church_address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

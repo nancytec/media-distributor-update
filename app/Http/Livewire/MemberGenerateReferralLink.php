@@ -9,6 +9,10 @@ use App\Models\MediaLinkLike;
 use App\Models\MediaLinkShare;
 use App\Models\MediaLinkView;
 use App\Models\Member;
+use App\Models\NonMember;
+use App\Models\NonMemberFileLink;
+use App\Models\NonMemberMediaLinkDownload;
+use App\Models\NonMemberMediaLinkShare;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -19,10 +23,14 @@ class MemberGenerateReferralLink extends Component
     public $name;
     public $email;
     public $password;
+    public $rawPassword;
     public $confirm_password;
+    public $church_address;
+    public $church_name;
+    public $status;
     public $media = 1;
     public $church;
-
+    public $unique_id;
 
     // Pre-fetched Data
     public $churches;
@@ -32,11 +40,11 @@ class MemberGenerateReferralLink extends Component
     public $referal_link;
     public $showReferalLink;
     public $showGenerateLink;
+
     public $showMemberForm;
     public $showNonMemberForm;
 
     public $churchData;
-
     protected $listeners = ['displayMemberForm' => 'displayMemberForm'];
 
     public function mount()
@@ -44,7 +52,6 @@ class MemberGenerateReferralLink extends Component
         $this->fetchChurches();
         $this->fetchMedia();
         $this->showGenerateLinkForm();
-        $this->displayMemberForm();
     }
 
     public function displayMemberForm()
@@ -77,11 +84,20 @@ class MemberGenerateReferralLink extends Component
                'email'            => 'required|email|max:255',
                'password'         => 'required|min:6|max:255',
                'confirm_password' => 'min:6|required_with:password|same:password',
-               'church'           => 'required|max:255',
                'media'            => 'required|max:255',
             ]);
 
-        $this->churchData = User::where('slug', $this->church)->first();
+            if ($this->status === 'member'){
+                $this->churchData = User::where('slug', $this->church)->first();
+
+                $this->displayMemberForm();
+            }
+
+        if ($this->status === 'non_member'){
+            $this->unique_id = Str::random(30).'_'.time();
+            $this->displayNonMemberForm();
+        }
+
     }
 
     public function fetchChurches()
@@ -101,13 +117,23 @@ class MemberGenerateReferralLink extends Component
 
     public function generateLink()
     {
+        if ($this->status === 'member'){
+            $this->generateMemberLink();
+       }
+
+        if ($this->status === 'non_member'){
+            $this->generateNonMemberLink();
+        }
+    }
+
+    public function generateMemberLink(){
         $this->validate([
             'name'             => 'required|max:255',
             'email'            => 'required|email|max:255',
             'password'         => 'required|min:6|max:255',
             'confirm_password' => 'min:6|required_with:password|same:password',
-            'church'           => 'required|max:255',
             'media'            => 'required|max:255',
+            'church'            => 'required|max:255',
         ]);
 
         // 1)Check if the user has an account
@@ -139,7 +165,7 @@ class MemberGenerateReferralLink extends Component
         }
 
         // 3)Check if the user already has a link with same church and same file, then retrieve the old link
-            $referral_link = $this->verifyMember($member); // Returns the referral link or false
+        $referral_link = $this->verifyMember($member); // Returns the referral link or false
         if ($referral_link){
             $this->displayLink($referral_link);
             $this->alert('success', 'Link Retrieved successfully');
@@ -151,6 +177,115 @@ class MemberGenerateReferralLink extends Component
         }
 
     }
+
+
+    public function generateNonMemberLink(){
+        $this->validate([
+            'name'             => 'required|max:255',
+            'email'            => 'required|email|max:255',
+            'password'         => 'required|min:6|max:255',
+            'confirm_password' => 'min:6|required_with:password|same:password',
+            'media'            => 'required|max:255',
+            'church_address'   => 'required|max:1000',
+        ]);
+
+        $this->rawPassword = $this->password;
+        $this->password = bcrypt($this->password);
+
+        // 1)Check if the user has an account
+        $nonMember = NonMember::where('email', $this->email)->first();
+        if (!$nonMember){
+            //Create Member Account
+            $nonMember  = $this->createNewNonMember();
+
+            //Create a new media link
+            $this->createNonMemberMediaLink($nonMember);
+
+            $referral_link = env('REF_URL')."/m/$this->media"."/".$nonMember->slug."/".$nonMember->unique_id;
+            $this->clearInputs();
+
+            $this->displayLink($referral_link);
+            $this->alert('success', 'Link Created successfully');
+            return true;
+
+        }
+
+        // 2)Check if the user already has a link with same church and same file, then retrieve the old link
+        $referral_link = $this->verifyNonMember($nonMember); // Returns the referral link or false
+        if ($referral_link){
+            $this->displayLink($referral_link);
+            $this->alert('success', 'Link Retrieved successfully');
+            return true;
+        }else{
+            //Else return authentication error
+            $this->password = $this->rawPassword;
+            $this->alert('error', 'Authentication Error', 'Press Ok to try again');
+            return false;
+        }
+
+    }
+
+
+    public function verifyNonMember($member){
+        // Compare password with Member registered password
+        if(Hash::check($this->rawPassword, $member->password)) {
+
+            // 3)Check if the user already has a link with same church and same file, then retrieve the old link
+            $link = NonMemberFileLink::where('email', '=', $this->email)->where('media_id', '=', $this->media)->first();
+            //If Media Exist
+            if ($link){
+                //Retrieve media Link
+                return env('REF_URL')."/m/$this->media"."/".$link->slug."/".$link->unique_id;
+            }else{
+                //Create a new media link
+                $media = $this->createNonMemberMediaLink($member);
+                return env('REF_URL')."/m/$this->media"."/".$media->slug."/".$media->unique_id;
+            }
+        }
+        return false;
+    }
+
+    public function createNewNonMember(){
+        return NonMember::create([
+            'name'             => $this->name,
+            'email'            => $this->email,
+            'slug'             => Str::slug($this->name),
+            'unique_id'        => $this->unique_id,
+            'password'         => $this->password,
+            'church_name'      => $this->church_name,
+            'church_address'   => $this->church_address,
+        ]);
+    }
+
+    public function createNonMemberMediaLink($user)
+    {
+        $mediaLink = NonMemberFileLink::create([
+            'name'             => $user->name,
+            'email'            => $user->email,
+            'slug'             => $user->slug,
+            'unique_id'        => $user->unique_id,
+            'password'         => $user->password,
+            'church_name'      => $this->church_name,
+            'church_address'   => $this->church_address,
+            'link'             => "/m/$this->media"."/".$user->slug."/".$user->unique_id,
+            'media_id'         => $this->media,
+        ]);
+
+        //Create Views with the inserted Data
+        NonMemberMediaLinkDownload::create([
+            'media_link' => "/m/$this->media"."/".$user->slug."/".$user->unique_id,
+            'count'         => 0
+        ]);
+        NonMemberMediaLinkShare::create([
+            'media_link' => "/m/$this->media"."/".$user->slug."/".$user->unique_id,
+            'count'         => 0
+        ]);
+
+        return $mediaLink;
+    }
+
+
+
 
     public function checkChurch(){
         $church = User::where('slug', $this->church)->first();
@@ -197,7 +332,7 @@ class MemberGenerateReferralLink extends Component
             'email'            => $member->email,
             'slug'             => Str::slug($this->name),
             'password'         => bcrypt($this->password),
-            'link'             => env('REF_URL')."/media/$this->media"."/".$this->church."/".Str::slug($this->name),
+            'link'             => "/media/$this->media"."/".$this->church."/".Str::slug($this->name),
             'church_slug'      => $this->church,
             'media_id'         => $this->media,
         ]);

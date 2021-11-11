@@ -113,11 +113,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('admin.dashboard')}}" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                        <a href="{{route('admin.new-media')}}" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
                             <p>
-                                New Media
-                                <span class="right badge badge-success">media</span>
+                                New media
                             </p>
                         </a>
                     </li>
@@ -151,6 +150,22 @@
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 Guests
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.missionaries')}}" class="nav-link">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>
+                                Missionries
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.analytics')}}" class="nav-link">
+                            <i class="nav-icon fas fa-chart-line"></i>
+                            <p>
+                                Analytics
                             </p>
                         </a>
                     </li>
@@ -302,6 +317,22 @@
             .then((willDelete) => {
                 if(willDelete){
                     window.livewire.emit('delete', event.detail.id);
+                }
+            });
+    });
+
+
+    window.addEventListener('swal:confirmMember', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        })
+            .then((willDelete) => {
+                if(willDelete){
+                    window.livewire.emit('deleteMember', event.detail.id);
                 }
             });
     });

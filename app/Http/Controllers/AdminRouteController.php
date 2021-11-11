@@ -12,6 +12,17 @@ class AdminRouteController extends Controller
         return view('admin.admin_dashboard');
     }
 
+    public function adminNewMediaPage()
+    {
+        return view('admin.admin_new_media');
+    }
+
+    public function adminAnalyticsPage()
+    {
+        return view('admin.admin_analytics');
+    }
+
+
     public function adminAddChurchPage()
     {
         return view('admin.admin_add_church');
@@ -27,6 +38,11 @@ class AdminRouteController extends Controller
         return view('admin.admin_guest');
     }
 
+    public function adminMissionaryPage()
+    {
+        return view('admin.admin_missionary');
+    }
+
     public function adminViewChurchPage($church_id)
     {
         return view('admin.admin_view_church', ['church_id' => $church_id]);
@@ -35,6 +51,11 @@ class AdminRouteController extends Controller
     public function adminViewGuestPage($guest_id)
     {
         return view('admin.admin_view_guest', ['guest_id' => $guest_id]);
+    }
+
+    public function adminViewMissionaryPage($missionary_id)
+    {
+        return view('admin.admin_view_missionary', ['missionary_id' => $missionary_id]);
     }
 
     public function adminViewMemberPage($member_id)
