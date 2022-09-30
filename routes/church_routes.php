@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\AdminRouteController;
 use App\Http\Controllers\ChurchAuthController;
 use App\Http\Controllers\ChurchRouteController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::prefix('church')->name('church.')->group(function () {
         Route::get('/analytics',                        [ChurchRouteController::class, 'churchAnalyticsPage'])->name('analytics');
         Route::get('/members-list',                     [ChurchRouteController::class, 'churchMembersListPage'])->name('members-list');
         Route::get('/new-member',                       [ChurchRouteController::class, 'churchNewMemberPage'])->name('new-member');
+        Route::get('/all-media',                        [ChurchRouteController::class, 'churchAllMediaPage'])->name('all-media');
+        Route::get('/media/{media_id}',                 [ChurchRouteController::class, 'churchViewMediaPage'])->name('media-view');
+
+
+
         Route::get('/shared-links',                     [ChurchRouteController::class, 'churchSharedLinksPage'])->name('shared-links');
         Route::get('/members-view/{member_id}',         [ChurchRouteController::class, 'churchMembersViewPage'])->name('members-view');
         Route::get('/members-link-view/{member_email}', [ChurchRouteController::class, 'churchMembersLinkViewPage'])->name('members-link-view');

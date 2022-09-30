@@ -140,6 +140,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('church.all-media')}}" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                All media
+                                <span class="right badge badge-primary">uploaded</span>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('church.shared-links')}}" class="nav-link @if(Route::currentRouteName() == 'church.shared-links') active @endif">
                             <i class="nav-icon fas fa-link"></i>
                             <p>

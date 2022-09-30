@@ -49,4 +49,15 @@ class User extends Authenticatable
             return "https://ui-avatars.com/api/?name=$this->name&color=563C5C&background=FFFFFF";
         }
     }
+
+    public function medias()
+    {
+        return $this->hasMany(ChurchFileLink::class, 'church_id');
+    }
+
+    public function members()
+    {
+        return $this->hasMany(Member::class, 'church_id');
+    }
+
 }

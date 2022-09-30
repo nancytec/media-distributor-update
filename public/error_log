@@ -1,0 +1,31 @@
+[26-Oct-2021 15:36:53 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:37:09 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:38:28 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:38:41 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:39:29 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:42:29 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:42:46 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:43:34 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:46:08 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:46:21 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:50:35 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:50:46 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 15:50:56 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 16:02:34 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[26-Oct-2021 16:07:22 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 1052672 bytes) in /home/loveworldbooks/public_html/media-ntyba/vendor/symfony/mime/FileinfoMimeTypeGuesser.php on line 60
+[15-Nov-2021 20:50:04 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[16-Nov-2021 13:05:21 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[16-Nov-2021 13:13:00 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[16-Nov-2021 13:14:51 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[16-Nov-2021 17:57:21 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[17-Nov-2021 09:35:44 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[17-Nov-2021 09:40:17 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[17-Nov-2021 10:24:28 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[17-Nov-2021 10:27:49 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[18-Nov-2021 04:39:48 UTC] PHP Warning:  POST Content-Length of 15247640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[18-Nov-2021 04:44:04 UTC] PHP Warning:  POST Content-Length of 15247640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[18-Nov-2021 05:02:57 UTC] PHP Warning:  POST Content-Length of 15247640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[18-Nov-2021 05:09:30 UTC] PHP Warning:  POST Content-Length of 15247640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[23-Nov-2021 12:48:41 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[23-Nov-2021 12:49:21 UTC] PHP Warning:  POST Content-Length of 45009467 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[31-Jan-2022 23:31:28 UTC] PHP Warning:  POST Content-Length of 19693137 bytes exceeds the limit of 8388608 bytes in Unknown on line 0

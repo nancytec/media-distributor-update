@@ -85,10 +85,10 @@
                                                 <h3 class="timeline-header"><a href="#">Media Name:</a> {{$media->media->name}}</h3>
 
                                                 <div class="timeline-body">
-                                                    {{$media->link}}
+                                                    {{env('REF_URL')}}{{$media->link}}
                                                 </div>
                                                 <div class="timeline-footer">
-                                                    <a target="_blank" href="{{$media->link}}" class="btn btn-primary btn-sm">Visit link</a>
+                                                    <a target="_blank" href="{{env('REF_URL')}}{{$media->link}}" class="btn btn-primary btn-sm">Visit link</a>
                                                     <a href="#" wire:click="deleteConfirm({{$media->id}})" class="btn btn-danger btn-sm">Delete</a>
                                                     <span class="float-right">
                                                          <a href="#" class="link-black text-sm mr-2"><i class="fas fa-eye mr-1"></i> {{count($media->views)}}</a>

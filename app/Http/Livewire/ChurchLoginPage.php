@@ -10,9 +10,9 @@ class ChurchLoginPage extends Component
     public $email;
     public $password;
 
-    public function updated($feild)
+    public function updated($field)
     {
-        $this->validateOnly($feild, [
+        $this->validateOnly($field, [
             'email' => 'required|email|max:255',
             'password' => 'required|max:255',
         ]);
