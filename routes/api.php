@@ -30,6 +30,8 @@ Route::group(['middleware' => ['cors', 'json.response', 'throttle:60,1']], funct
     Route::post('share_link', [App\Http\Controllers\API\MediaController::class, 'shareLink'])->name('share_download_link');
     Route::post('gift_link', [App\Http\Controllers\API\MediaController::class, 'giftLink'])->name('gift_download_link');
 
+    Route::post('gift_link2', [App\Http\Controllers\API\MediaController::class, 'giftLinkk'])->name('gift_download_linkk');
+
 
     /////////////////////
     // MediaController //

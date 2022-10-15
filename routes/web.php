@@ -32,4 +32,4 @@ Route::get('/auth/reset-password', [ChurchRouteController::class, 'churchLoginPa
 Route::get('/media/download/{media_id}', [MemberRouteController::class, 'memberDownloadPage'])->name('download');
 
 //Testcases
-
+Route::get('/check', [VisitorMediaDownloadPage::class]);

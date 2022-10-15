@@ -23,7 +23,7 @@ class VisitorMediaDocDownloadPage extends Component
     public function updated(){
         if ($this->language){
             $translation = MediaTranslation::where([
-                ['media_id', '=', $this->media->id],
+                // ['media_id', '=', $this->media->id],
                 ['language', '=', $this->language]
             ])->first();
 
@@ -78,6 +78,7 @@ class VisitorMediaDocDownloadPage extends Component
         ]);
     }
 
+    
 
     public function render()
     {

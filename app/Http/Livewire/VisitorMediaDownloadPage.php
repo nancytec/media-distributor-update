@@ -37,6 +37,8 @@ class VisitorMediaDownloadPage extends Component
 
     public function mount($media_id){
         $this->media = Media::find($media_id);
+
+
         if (!$this->media){
             $this->alert('error', "Media Not found", "press ok to continue");
         }

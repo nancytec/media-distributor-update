@@ -447,7 +447,7 @@ class MediaController extends BaseController
         $user = $request->user();
         $validator = Validator::make($request->all(), [
             'email' => 'required | email',
-            'media_name' => 'required | string',
+            'media_name' => 'required | string'
         ]);
         if ($validator->fails()) {
             return $validator->errors()->all();
@@ -471,6 +471,43 @@ class MediaController extends BaseController
         $this->saveBeneficiary($request);
         return $this->sendResponse($request->all(), 'It got here');
     }
+
+
+
+    public function giftLinkk(Request $request)
+    {
+
+        $user = $request->user();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required | email',
+            'media_name' => 'required | string',
+            'language' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+//
+        $data = [
+//            'path' => $request->path,
+            //'path' => 'media/download/1',
+            'name' => $request->name,
+            'sender_name' => $request->sender_name,
+            'media_name' => $request->media_name,
+            'language' => $request->language
+        ];
+
+        Session::put(['sender_name' => $request->sender_name]);
+
+        Mail::send('email.media_link_shared', $data, function($message) use($request, $data) {
+            $message->to($request->email, $data['name'])->subject('Media download link');
+            $message->from('no-reply@nowthatyouarbornagain.org', 'Now That You Are Born Again');
+        });
+
+        $this->saveBeneficiary($request);
+        return $this->sendResponse($request->all(), 'It got here');
+    }
+
+
 
     /**
      * Adds a guest user to DB.
